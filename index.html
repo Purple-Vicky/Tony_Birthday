@@ -108,7 +108,7 @@ const $=id=>document.getElementById(id);
 function showQ(){
  locked=false; const q=Q[i]; $('count').textContent=`Question ${i+1} of ${Q.length}`; $('score').textContent=`Score: ${score}`;
  $('bar').style.width=`${(i/Q.length)*100}%`; $('round').textContent=q[0]; $('question').textContent=q[1];
- $('answers').innerHTML=''; $('feedback').classList.add('hide'); $('next').classList.add('hide'); $('leoStage').classList.add('hide');
+ $('answers').innerHTML=''; $('feedback').textContent=''; $('feedback').classList.add('hide'); $('next').classList.add('hide'); leoReact('thinking',pick(['Well, Grandad? I’m waiting… 🐾','Come on then, Grandad. What’s your answer?','I’m listening, Grandad… choose carefully.','No pressure, Grandad. I’m just watching. 👀','What do you reckon, Grandad?','Think carefully. Steak privileges may depend on this. 🥩']));
  q[2].forEach((a,n)=>{const b=document.createElement('button');b.className='answer';b.textContent=String.fromCharCode(65+n)+'. '+a;
  b.addEventListener('click',()=>answer(n,b));$('answers').appendChild(b);});
 }
