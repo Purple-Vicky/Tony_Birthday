@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leo's Gallery — Grandad Tony's Birthday</title>
+<style>
+:root{--green:#315f49;--cream:#fffaf0;--ink:#342b26}
+*{box-sizing:border-box} body{margin:0;background:#171917;color:white;font-family:system-ui,-apple-system,sans-serif}
+header{position:sticky;top:0;z-index:5;background:rgba(23,25,23,.94);padding:18px;text-align:center}
+h1{margin:0 0 5px;font-size:clamp(28px,5vw,52px)} header p{margin:0;color:#ddd}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:15px}
+button,a.btn{border:0;border-radius:12px;background:var(--green);color:white;padding:12px 18px;font-weight:800;
+font-size:16px;text-decoration:none;cursor:pointer}
+.grid{max-width:1200px;margin:auto;padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+figure{margin:0;background:#242824;border-radius:18px;overflow:hidden;border:2px solid #456f5a}
+figure img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;cursor:pointer}
+figcaption{padding:10px 14px;text-align:center;font-weight:700}
+#viewer{display:none;position:fixed;inset:0;z-index:20;background:#000;align-items:center;justify-content:center}
+#viewer.show{display:flex} #viewer img{width:100vw;height:100vh;object-fit:contain}
+#caption{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.62);
+padding:9px 16px;border-radius:20px;font-weight:800}
+#close{position:absolute;right:18px;top:18px;font-size:28px;background:rgba(0,0,0,.55)}
+#pause{position:absolute;left:18px;top:18px;background:rgba(0,0,0,.55)}
+@media (min-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+</style></head><body>
+<header><h1>🐾 Leo’s Gallery</h1><p>Especially for Grandad Tony ❤️</p>
+<div class="actions"><a class="btn" href="index.html">← Birthday Quiz</a>
+<button onclick="startShow()">📺 Full-screen TV slideshow</button></div></header>
+<main class="grid">
+<figure><img src="Dog 1.png" alt="Leo relaxing" loading="lazy" onclick="openPhoto(0)"><figcaption>Leo relaxing</figcaption></figure>
+<figure><img src="Dog 2.png" alt="Leo in the sunshine" loading="lazy" onclick="openPhoto(1)"><figcaption>Leo in the sunshine</figcaption></figure>
+<figure><img src="Dog 3.png" alt="Leo close-up" loading="lazy" onclick="openPhoto(2)"><figcaption>Leo close-up</figcaption></figure>
+<figure><img src="Dog 4.png" alt="Leo exploring" loading="lazy" onclick="openPhoto(3)"><figcaption>Leo exploring</figcaption></figure>
+<figure><img src="Dog 5.png" alt="Leo with his rope toy" loading="lazy" onclick="openPhoto(4)"><figcaption>Leo with his rope toy</figcaption></figure>
+<figure><img src="Dog 6.png" alt="Leo ready to play" loading="lazy" onclick="openPhoto(5)"><figcaption>Leo ready to play</figcaption></figure>
+<figure><img src="Leo8(1).png" alt="Leo lounging" loading="lazy" onclick="openPhoto(6)"><figcaption>Leo lounging</figcaption></figure>
+</main>
+<div id="viewer" onclick="nextPhoto()"><button id="pause" onclick="event.stopPropagation();togglePause()">⏸ Pause</button>
+<button id="close" onclick="event.stopPropagation();closeViewer()">×</button><img id="big" alt=""><div id="caption"></div></div>
+<script>
+const pics=[
+{src:'Dog 1.png',cap:'Leo relaxing'},{src:'Dog 2.png',cap:'Leo in the sunshine'},{src:'Dog 3.png',cap:'Leo close-up'},{src:'Dog 4.png',cap:'Leo exploring'},{src:'Dog 5.png',cap:'Leo with his rope toy'},{src:'Dog 6.png',cap:'Leo ready to play'},{src:'Leo8(1).png',cap:'Leo lounging'}];let n=0,timer=null,paused=false;
+function show(){big.src=pics[n].src;caption.textContent=pics[n].cap}
+function openPhoto(i){n=i;viewer.classList.add('show');show()}
+function nextPhoto(){n=(n+1)%pics.length;show()}
+function startShow(){openPhoto(0);paused=false;pause.textContent='⏸ Pause';
+ if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{});
+ clearInterval(timer);timer=setInterval(()=>{if(!paused)nextPhoto()},5000)}
+function togglePause(){paused=!paused;pause.textContent=paused?'▶ Play':'⏸ Pause'}
+function closeViewer(){viewer.classList.remove('show');clearInterval(timer);
+ if(document.fullscreenElement)document.exitFullscreen().catch(()=>{})}
+document.addEventListener('keydown',e=>{if(!viewer.classList.contains('show'))return;
+ if(e.key==='ArrowRight')nextPhoto(); if(e.key==='Escape')closeViewer()});
+</script></body></html>
